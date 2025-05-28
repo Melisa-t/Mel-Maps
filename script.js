@@ -6,10 +6,10 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 const form = document.querySelector(".form");
 const containerWorkouts = document.querySelector(".workouts");
 const inputType = document.querySelector(".form__input--type");
-const inputDistance = document.querySelector(".form__input--distance");
-const inputDuration = document.querySelector(".form__input--duration");
-const inputCadence = document.querySelector(".form__input--cadence");
-const inputElevation = document.querySelector(".form__input--elevation");
+let inputDistance = document.querySelector(".form__input--distance");
+let inputDuration = document.querySelector(".form__input--duration");
+let inputCadence = document.querySelector(".form__input--cadence");
+let inputElevation = document.querySelector(".form__input--elevation");
 
 let map, mapEvent;
 
@@ -38,6 +38,11 @@ navigator.geolocation?.getCurrentPosition(
 
 form.addEventListener(`submit`, function (e) {
   e.preventDefault();
+  inputDistance.value =
+    inputCadence.value =
+    inputDuration.value =
+    inputElevation.value =
+      ``;
   const { lat, lng } = mapEvent.latlng;
   L.marker([lat, lng])
     .addTo(map)
