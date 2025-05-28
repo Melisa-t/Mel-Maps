@@ -17,9 +17,9 @@ navigator.geolocation?.getCurrentPosition(
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
 
-    const map = L.map("map").setView(coords, 13);
+    const map = L.map("map").setView(coords, 14);
 
-    L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    L.tileLayer("https://tile.openstreetmap.de/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
