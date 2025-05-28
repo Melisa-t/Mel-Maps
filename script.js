@@ -80,26 +80,26 @@ class App {
 const app = new App();
 
 class WorkOutCl {
-  constructor(id, workOutName, coords, distance, time, date) {
-    this.id = id;
-    this.workOutName = workOutName;
+  date = new Date();
+  id = (Date.now() + ``).slice(-10);
+  constructor(coords, distance, time) {
     this.coords = coords;
     this.distance = distance;
     this.time = time;
-    this.date = date;
   }
 }
 
 class WorkOutCyc extends WorkOutCl {
   constructor(coords, distance, time, elevGain) {
-    super(workOutName, coords, distance, time);
+    super(coords, distance, time);
     this.elevGain = elevGain;
+    this.speed = this.distance / (this.time / 60);
   }
 }
 class WorkOutRun extends WorkOutCl {
-  constructor(coords, distance, time, cadence, pace) {
-    super(workOutName, coords, distance, time);
+  constructor(coords, distance, time, cadence) {
+    super(coords, distance, time);
     this.cadence = cadence;
-    this.pace = pace;
+    this.pace = this.time / this.distance;
   }
 }
