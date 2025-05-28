@@ -17,14 +17,14 @@ navigator.geolocation?.getCurrentPosition(
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
 
-    const map = L.map("map").setView([`${coords[0]}`, `${coords[1]}`], 13);
+    const map = L.map("map").setView(coords, 13);
 
     L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution:
         '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
 
-    L.marker([`${coords[0]}`, `${coords[1]}`])
+    L.marker(coords)
       .addTo(map)
       .bindPopup("Gotcha!")
       .openPopup();
