@@ -163,7 +163,10 @@ class App {
     const commonHTML = `<li class="workout workout--${workout.type}" data-id=${
       workout.id
     }>
+              <div class="header">
           <h2 class="workout__title">${workout.description}</h2>
+                    <span class="close-btn">X</span>
+          </div>
           <div class="workout__details">
             <span class="workout__icon">${
               workout.type === `running` ? `🏃‍♂️` : `🚴‍♀️`
