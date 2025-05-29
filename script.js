@@ -53,6 +53,7 @@ class App {
     form.addEventListener(`submit`, this._newWorkout.bind(this));
     inputType.addEventListener(`change`, this._toggleElevationField); // doesn't use this keyword, no need to bind.
     containerWorkouts.addEventListener(`click`, this._moveMapTo.bind(this));
+    containerWorkouts.addEventListener(`click`, this._deleteWorkOut.bind(this));
   }
   _getPosition() {
     navigator.geolocation?.getCurrentPosition(
@@ -238,6 +239,16 @@ class App {
     this.workouts.forEach((w) => {
       this._renderWorkOut(w);
     });
+  }
+  _deleteWorkOut(e) {
+    const workOutEl = e.target.closest(`.workout`);
+    if (!workOutEl) return;
+    const workOutData = this.workouts.find(
+      (w) => w.id === workOutEl.dataset.id
+    );
+    const removedIndex = this.workouts.findIndex((b) => b === workOutData);
+    this.workouts.splice(removedIndex, 1);
+    workOutEl.remove();
   }
 }
 
