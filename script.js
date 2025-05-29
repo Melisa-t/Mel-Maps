@@ -51,6 +51,7 @@ class App {
     this._getPosition();
     form.addEventListener(`submit`, this._newWorkout.bind(this));
     inputType.addEventListener(`change`, this._toggleElevationField); // doesn't use this keyword, no need to bind.
+    containerWorkouts.addEventListener(`click`, this._moveMapTo.bind(this));
   }
   _getPosition() {
     navigator.geolocation?.getCurrentPosition(
@@ -203,6 +204,15 @@ class App {
 
       form.insertAdjacentHTML(`afterend`, totalCyc);
     }
+  }
+  _moveMapTo(e) {
+    const workOutEl = e.target.closest(`.workout`);
+
+    if (!workOutEl) return;
+    const workOutData = this.workouts.find(
+      (w) => w.id === workOutEl.dataset.id
+    );
+    this.#map.setView(workOutData.coords)
   }
 }
 
