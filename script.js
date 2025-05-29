@@ -212,7 +212,12 @@ class App {
     const workOutData = this.workouts.find(
       (w) => w.id === workOutEl.dataset.id
     );
-    this.#map.setView(workOutData.coords)
+    this.#map.setView(workOutData.coords, {
+      animate: true,
+      pan: {
+        duration: 1,
+      },
+    });
   }
 }
 
