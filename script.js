@@ -54,6 +54,7 @@ class App {
     inputType.addEventListener(`change`, this._toggleElevationField); // doesn't use this keyword, no need to bind.
     containerWorkouts.addEventListener(`click`, this._moveMapTo.bind(this));
     containerWorkouts.addEventListener(`click`, this._deleteWorkOut.bind(this));
+    containerWorkouts.addEventListener(`click`, this. _editWorkOut)
   }
   _getPosition() {
     navigator.geolocation?.getCurrentPosition(
@@ -166,7 +167,7 @@ class App {
     }>
               <div class="header">
           <h2 class="workout__title">${workout.description}</h2>
-                     <button class="edit-btn">Edit</button>
+                    
                     <span class="close-btn">X</span>
           </div>
           <div class="workout__details">
@@ -243,7 +244,6 @@ class App {
   }
   _deleteWorkOut(e) {
     const workOutEl = e.target.closest(`.workout`);
-    console.log();
     if (!workOutEl) return;
     if (e.target === e.target.closest(`.close-btn`)) {
       const workOutData = this.workouts.find(
@@ -255,6 +255,19 @@ class App {
       this._setLocalStorage();
     }
   }
+
+  // _editWorkOut(e) {
+  //   const workOutData = e.target.closest(`.workout`);
+  //   if (!workOutData) return;
+  //   //tiklayinca form ayni degerlerle yeniden acilacak
+  //   //yeni degerler eski degerlerle degistirilecek
+  //   if (e.target === e.target.closest(`.edit-btn`)) {
+  //     console.log(workOutData);
+  //     workOutData.style.display=`none`
+  //     form.classList.remove(`hidden`)
+  //      console.log();
+  //   }
+  // }
 }
 
 const app = new App();

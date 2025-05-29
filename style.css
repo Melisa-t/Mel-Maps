@@ -228,7 +228,7 @@ a:visited {
   font-size: 2rem;
 }
 
-.btns {
+/* .btns {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -249,3 +249,4 @@ a:visited {
 .edit-btn:hover {
   cursor: pointer;
 }
+ */
