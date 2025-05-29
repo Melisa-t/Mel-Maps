@@ -49,6 +49,7 @@ class App {
   workouts = [];
   constructor() {
     this._getPosition();
+    this._getLocalStorage();
     form.addEventListener(`submit`, this._newWorkout.bind(this));
     inputType.addEventListener(`change`, this._toggleElevationField); // doesn't use this keyword, no need to bind.
     containerWorkouts.addEventListener(`click`, this._moveMapTo.bind(this));
@@ -66,7 +67,7 @@ class App {
     const { longitude } = position.coords;
     const coords = [latitude, longitude];
 
-    this.#map = L.map("map").setView(coords, 14);
+    this.#map = L.map("map").setView(coords, 13);
 
     L.tileLayer("https://tile.openstreetmap.de/{z}/{x}/{y}.png", {
       attribution:
@@ -74,6 +75,9 @@ class App {
     }).addTo(this.#map);
 
     this.#map.on(`click`, this._showForm.bind(this));
+    this.workouts.forEach((d) => {
+      this._renderWorkOutMarker(d);
+    });
   }
   _showForm(mapE) {
     this.#mapEvent = mapE;
@@ -124,6 +128,7 @@ class App {
     this._renderWorkOutMarker(workout);
     this._renderWorkOut(workout);
     this._hideForm();
+    this._setLocalStorage();
   }
   _hideForm() {
     inputDistance.value =
@@ -212,11 +217,23 @@ class App {
     const workOutData = this.workouts.find(
       (w) => w.id === workOutEl.dataset.id
     );
-    this.#map.setView(workOutData.coords, {
+    this.#map.setView(workOutData.coords, 13, {
       animate: true,
       pan: {
         duration: 1,
       },
+    });
+  }
+  _setLocalStorage() {
+    localStorage.setItem(`workouts`, JSON.stringify(this.workouts));
+  }
+  _getLocalStorage() {
+    const data = JSON.parse(localStorage.getItem(`workouts`));
+    if (!data) return;
+
+    this.workouts = data;
+    this.workouts.forEach((w) => {
+      this._renderWorkOut(w);
     });
   }
 }
