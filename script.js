@@ -166,6 +166,7 @@ class App {
     }>
               <div class="header">
           <h2 class="workout__title">${workout.description}</h2>
+                     <button class="edit-btn">Edit</button>
                     <span class="close-btn">X</span>
           </div>
           <div class="workout__details">
@@ -242,13 +243,17 @@ class App {
   }
   _deleteWorkOut(e) {
     const workOutEl = e.target.closest(`.workout`);
+    console.log();
     if (!workOutEl) return;
-    const workOutData = this.workouts.find(
-      (w) => w.id === workOutEl.dataset.id
-    );
-    const removedIndex = this.workouts.findIndex((b) => b === workOutData);
-    this.workouts.splice(removedIndex, 1);
-    workOutEl.remove();
+    if (e.target === e.target.closest(`.close-btn`)) {
+      const workOutData = this.workouts.find(
+        (w) => w.id === workOutEl.dataset.id
+      );
+      const removedIndex = this.workouts.findIndex((b) => b === workOutData);
+      this.workouts.splice(removedIndex, 1);
+      workOutEl.remove();
+      this._setLocalStorage();
+    }
   }
 }
 

@@ -227,5 +227,21 @@ a:visited {
 
   .close-btn{
     font-size: 2rem;
+
   }
 
+.btns {
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.edit-btn{
+  margin-left: 5%;
+  padding: 6px 16px;
+  background-color: var(--color-light--2);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font: inherit;
+}
