@@ -226,6 +226,7 @@ a:visited {
 
 .close-btn {
   font-size: 2rem;
+  font-weight: bold;
 }
 
 /* .btns {
@@ -264,4 +265,10 @@ a:visited {
 
 .hidden{
   display: none;
+}
+
+a:link,
+a:visited {
+  color: var(--color-light--1);
+  text-decoration: none;
 }
