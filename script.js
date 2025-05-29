@@ -19,7 +19,7 @@ class WorkOutCl {
   _createDescription() {
     // prettier-ignore
     const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
-     this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)}
+    this.description = `${this.type[0].toUpperCase()}${this.type.slice(1)}
          workout on ${months[this.date.getMonth()]} ${this.date.getDate()}`;
   }
 }
@@ -120,19 +120,21 @@ class App {
     }
 
     this.workouts.push(workout);
-    this.renderWorkOutMarker(workout);
+    this._renderWorkOutMarker(workout);
     this._renderWorkOut(workout);
-
+    this._hideForm();
+  }
+  _hideForm() {
     inputDistance.value =
       inputCadence.value =
       inputDuration.value =
       inputElevation.value =
         ``;
-
+    form.style.display = `none `;
     form.classList.add(`hidden`);
+    setTimeout(() => (form.style.display = `grid`), 1000);
   }
-
-  renderWorkOutMarker(workout) {
+  _renderWorkOutMarker(workout) {
     L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
