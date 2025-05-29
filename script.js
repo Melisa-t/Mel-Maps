@@ -7,7 +7,8 @@ let inputDistance = document.querySelector(".form__input--distance");
 let inputDuration = document.querySelector(".form__input--duration");
 let inputCadence = document.querySelector(".form__input--cadence");
 let inputElevation = document.querySelector(".form__input--elevation");
-
+const resetBtn = document.querySelector(`.reset-btn`);
+const closeBtn = document.querySelectorAll(`.close-btn`);
 class WorkOutCl {
   date = new Date();
   id = (Date.now() + ``).slice(-10);
@@ -47,6 +48,7 @@ class App {
   #map;
   #mapEvent;
   workouts = [];
+  markers = [];
   constructor() {
     this._getPosition();
     this._getLocalStorage();
@@ -54,7 +56,7 @@ class App {
     inputType.addEventListener(`change`, this._toggleElevationField); // doesn't use this keyword, no need to bind.
     containerWorkouts.addEventListener(`click`, this._moveMapTo.bind(this));
     containerWorkouts.addEventListener(`click`, this._deleteWorkOut.bind(this));
-    containerWorkouts.addEventListener(`click`, this. _editWorkOut)
+    resetBtn.addEventListener(`click`, this._reset);
   }
   _getPosition() {
     navigator.geolocation?.getCurrentPosition(
@@ -91,7 +93,7 @@ class App {
   }
   _newWorkout(e) {
     e.preventDefault();
-
+    if (!this.workouts) resetBtn.classList.remove(`hidden`);
     const inputValidation = (...input) =>
       input.every((i) => Number.isFinite(i));
     const inputPositives = (...input) => input.every((i) => i > 0);
@@ -143,7 +145,7 @@ class App {
     setTimeout(() => (form.style.display = `grid`), 1000);
   }
   _renderWorkOutMarker(workout) {
-    L.marker(workout.coords)
+    const marker = L.marker(workout.coords)
       .addTo(this.#map)
       .bindPopup(
         L.popup({
@@ -160,6 +162,9 @@ class App {
         `${workout.type === `running` ? `🏃‍♂️` : `🚴‍♀️`} ${workout.description}`
       )
       .openPopup();
+
+    marker.leafId = workout.id;
+    this.markers.push(marker);
   }
   _renderWorkOut(workout) {
     const commonHTML = `<li class="workout workout--${workout.type}" data-id=${
@@ -242,15 +247,21 @@ class App {
       this._renderWorkOut(w);
     });
   }
+
+  _reset() {
+    localStorage.removeItem(`workouts`);
+    location.reload();
+  }
   _deleteWorkOut(e) {
     const workOutEl = e.target.closest(`.workout`);
     if (!workOutEl) return;
     if (e.target === e.target.closest(`.close-btn`)) {
-      const workOutData = this.workouts.find(
-        (w) => w.id === workOutEl.dataset.id
-      );
+      const dataId = workOutEl.dataset.id;
+      const workOutData = this.workouts.find((w) => w.id === dataId);
       const removedIndex = this.workouts.findIndex((b) => b === workOutData);
       this.workouts.splice(removedIndex, 1);
+      const marker = this.markers.find((x) => x.leafId === dataId);
+      marker.remove();
       workOutEl.remove();
       this._setLocalStorage();
     }

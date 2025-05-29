@@ -250,3 +250,18 @@ a:visited {
   cursor: pointer;
 }
  */
+
+.reset-btn {
+  padding: 6px 16px;
+  background-color: var(--color-light--2);
+  border: none;
+  outline: none;
+  border-radius: 5px;
+  font: inherit;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.hidden{
+  display: none;
+}
